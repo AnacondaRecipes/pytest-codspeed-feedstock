@@ -11,22 +11,21 @@ source:
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  noarch: python
   number: 0
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python
     - hatchling
     - pip
   run:
-    - python >={{ python_min }}
+    - python
     - cffi >=1.17.1
-    - setuptools
+    - setuptools # [py>=312]
     - pytest >=3.8
     - filelock >=3.12.2
     - rich >=13.8.1
-    - importlib-metadata >=8.5.0
+    - importlib-metadata >=8.5.0 # [py<310]
 
 test:
   imports:
@@ -34,7 +33,6 @@ test:
   commands:
     - pip check
   requires:
-    - python {{ python_min }}
     - pip
 
 about:
@@ -43,6 +41,7 @@ about:
   dev_url: https://github.com/CodSpeedHQ/pytest-codspeed
   doc_url: https://docs.codspeed.io/
   license: MIT
+  license_family: MIT
   license_file: LICENSE
 
 extra:
