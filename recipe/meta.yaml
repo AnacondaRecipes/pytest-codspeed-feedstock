@@ -38,6 +38,7 @@ test:
 about:
   home: https://codspeed.io/
   summary: Pytest plugin to create CodSpeed benchmarks
+  description: pytest-codspeed is a pytest plugin that integrates with CodSpeed to benchmark and monitor the performance of Python code.
   dev_url: https://github.com/CodSpeedHQ/pytest-codspeed
   doc_url: https://docs.codspeed.io/
   license: MIT
