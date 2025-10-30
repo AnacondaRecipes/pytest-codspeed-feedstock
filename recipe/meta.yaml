@@ -12,6 +12,7 @@ source:
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  skip: true # [py<39]
   missing_dso_whitelist:    # [linux]
     - "**/libpthread.so.0"  # [linux]
     - "**/libc.so.6"        # [linux]
@@ -21,7 +22,7 @@ requirements:
     - python
     - pip
     - setuptools
-    - cffi >=1.17.1
+    - cffi 2.0.0
   run:
     - python
     - cffi >=1.17.1
@@ -41,11 +42,12 @@ test:
     - pip
 
 about:
-  home: https://codspeed.io/
+  home: https://codspeed.io
   summary: Pytest plugin to create CodSpeed benchmarks
-  description: pytest-codspeed is a pytest plugin that integrates with CodSpeed to benchmark and monitor the performance of Python code.
+  description: |
+    pytest-codspeed is a pytest plugin that integrates with CodSpeed to benchmark and monitor the performance of Python code.
   dev_url: https://github.com/CodSpeedHQ/pytest-codspeed
-  doc_url: https://docs.codspeed.io/
+  doc_url: https://codspeed.io/docs
   license: MIT
   license_family: MIT
   license_file: LICENSE
@@ -54,3 +56,5 @@ extra:
   recipe-maintainers:
     - xhochy
     - kenodegard
+  skip-lints:
+    - invalid_url
