@@ -6,8 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 91afef90e6a96b013495e4702ef5d6358614a449e71008cdc194ef668778b92f
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+    sha256: 91afef90e6a96b013495e4702ef5d6358614a449e71008cdc194ef668778b92f
+  - url: https://github.com/CodSpeedHQ/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 1d2fa47b99617c26db045d7c531a601289852c04134d20f1b72d75128a464de9
+    folder: gh_src
 
 build:
   number: 0
@@ -35,12 +38,12 @@ requirements:
 
 test:
   source_files:
-    - tests
+    - gh_src/tests
   imports:
     - pytest_codspeed
   commands:
     - pip check
-    - pytest -v tests
+    - pytest -v gh_src/tests
   requires:
     - pip
     - pytest
