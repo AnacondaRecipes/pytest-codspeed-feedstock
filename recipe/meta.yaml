@@ -36,9 +36,10 @@ requirements:
     # Relax pytest-xdist compatibility for py==314
     - pytest-xdist >=3.6.1,<=3.8.0
 
+# E   ModuleNotFoundError: No module named 'audio_filters'
+{% set ignore_tests = " --ignore=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_audio_filters.py" %}
 # E   ModuleNotFoundError: No module named 'backtracking'
-{% set deselect_tests = " --deselect=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_audio_filters.py" %}
-{% set deselect_tests = deselect_tests + " --deselect=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_backtracking.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_backtracking.py" %}
 test:
   source_files:
     - gh_src/tests
@@ -46,7 +47,7 @@ test:
     - pytest_codspeed
   commands:
     - pip check
-    - pytest -v gh_src/tests {{ deselect_tests }}
+    - pytest -v gh_src/tests {{ ignore_tests }}
   requires:
     - pip
     - pytest
