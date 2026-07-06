@@ -38,6 +38,9 @@ requirements:
 
 # E   ModuleNotFoundError: No module named 'audio_filters'
 {% set ignore_tests = " --ignore=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_audio_filters.py" %}
+# E   LookupError: example "tests/examples/test_addition_fixture.py" is not found as a file or directory
+{% set deselect_tests = " --deselect=gh_src/tests/test_pytest_plugin.py::test_plugin_disabled" %}
+{% set deselect_tests = deselect_tests + " --deselect=gh_src/tests/test_pytest_plugin_walltime.py::test_bench_enabled_header_with_perf" %}
 # E   ModuleNotFoundError: No module named 'backtracking'
 {% set ignore_tests = ignore_tests + " --ignore=gh_src/tests/benchmarks/TheAlgorithms_bench/test_bench_backtracking.py" %}
 test:
@@ -47,7 +50,7 @@ test:
     - pytest_codspeed
   commands:
     - pip check
-    - pytest -v gh_src/tests {{ ignore_tests }}
+    - pytest -v gh_src/tests {{ ignore_tests }} {{ deselect_tests }}
   requires:
     - pip
     - pytest
