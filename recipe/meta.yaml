@@ -1,46 +1,49 @@
 {% set name = "pytest-codspeed" %}
-{% set version = "4.2.0" %}
+{% set version = "5.0.3" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pytest_codspeed-{{ version }}.tar.gz
-  sha256: 04b5d0bc5a1851ba1504d46bf9d7dbb355222a69f2cd440d54295db721b331f7
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: 91afef90e6a96b013495e4702ef5d6358614a449e71008cdc194ef668778b92f
 
 build:
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
-  skip: true # [py<39]
   missing_dso_whitelist:    # [linux]
     - "**/libpthread.so.0"  # [linux]
     - "**/libc.so.6"        # [linux]
+  skip: true # [py<39]
 
 requirements:
   host:
-    - python
     - pip
+    - python
     - setuptools
     - cffi 2.0.0
   run:
     - python
-    - cffi >=1.17.1
     - pytest >=3.8
     - rich >=13.8.1
     - importlib-metadata >=8.5.0 # [py<310]
   run_constrained:
     - pytest-benchmark >=5.0.0,<5.1.0
-    # Relax pytest-xdist compatibility for py<=314
-    - pytest-xdist >=3.6.1,<3.9.0
+    # Relax pytest-xdist compatibility for py==314
+    - pytest-xdist >=3.6.1,<=3.8.0
 
 test:
+  source_files:
+    - tests
   imports:
     - pytest_codspeed
   commands:
     - pip check
+    - pytest -v tests
   requires:
     - pip
+    - pytest
 
 about:
   home: https://codspeed.io
@@ -48,7 +51,7 @@ about:
   description: |
     pytest-codspeed is a pytest plugin that integrates with CodSpeed to benchmark and monitor the performance of Python code.
   dev_url: https://github.com/CodSpeedHQ/pytest-codspeed
-  doc_url: https://codspeed.io/docs
+  doc_url: https://codspeed.io/docs/reference/pytest-codspeed
   license: MIT
   license_family: MIT
   license_file: LICENSE
